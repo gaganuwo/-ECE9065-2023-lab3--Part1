@@ -92,5 +92,36 @@ function showUserDetails(userId) {
       });
 }
 
+function showStockDetails(stockSymbol) {
+            const stock = stocksData.find(s => s.symbol === stockSymbol);
+            if (stock) {
+                document.getElementById('stockName').textContent = stock.name;
+                document.getElementById('stockSector').textContent = stock.sector;
+                document.getElementById('stockIndustry').textContent = stock.subIndustry;
+                document.getElementById('stockAddress').textContent = stock.address;
+                const logoElement = document.getElementById('logo');
+                logoElement.src = `logos/${stockSymbol}.svg`;
+                document.querySelector('.StockDetails').style.display = 'block';
+            }
+}
 
+function refreshUserList() {
+    userListUl.innerHTML = "";
+    usersData.forEach(item => {
+      let li = document.createElement("li");
+      li.textContent = item.user.firstname + " " + item.user.lastname;
+      li.dataset.id = item.id;
+      userListUl.appendChild(li);
+    });
+  }
+
+  function resetDetails() {
+    document.querySelector("#userID").value = "";
+    document.querySelector("#firstname").value = "";
+    document.querySelector("#lastname").value = "";
+    document.querySelector("#address").value = "";
+    document.querySelector("#city").value = "";
+    document.querySelector("#email").value = "";
+    stockList.innerHTML = "";
+  }
 });
