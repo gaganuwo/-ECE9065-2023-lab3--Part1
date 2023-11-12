@@ -69,4 +69,28 @@ function showUserDetails(userId) {
         console.error('User data is missing or the portfolio is not an array');
     }
 
+    document.getElementById('btnSave').addEventListener("click", function (e) {
+        e.preventDefault();
+        let saveID = clickedId;
+        let objIndex = usersData.findIndex((obj => obj.id == saveID));
+        let user = usersData[objIndex]['user'];
+        user['firstname'] = document.querySelector('#firstname').value;
+        user['lastname'] = document.querySelector('#lastname').value;
+        user['email'] = document.querySelector('#email').value;
+        user['city'] = document.querySelector('#city').value;
+        user['address'] = document.querySelector('#address').value;
+        refreshUserList();
+      });
+    
+      document.getElementById('btnDelete').addEventListener("click", function (e) {
+        e.preventDefault();
+        let dltID = clickedId;
+        let dltObjIndex = usersData.findIndex((obj => obj.id == dltID));
+        usersData.splice(dltObjIndex, 1);
+        refreshUserList();
+        resetDetails();
+      });
+}
+
+
 });
