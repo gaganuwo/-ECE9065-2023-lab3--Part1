@@ -28,5 +28,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+function showUserDetails(userId) {
+    const user = usersData.find(user => user.id.toString() === userId);
+    if (user && user.user && Array.isArray(user.portfolio)) {
+        const userDetailsForm = document.querySelector('.UserForm .userEntry');
+        userDetailsForm.querySelector('#firstname').value = user.user.firstname;
+        userDetailsForm.querySelector('#lastname').value = user.user.lastname;
+        userDetailsForm.querySelector('#email').value = user.user.email;
+        userDetailsForm.querySelector('#address').value = user.user.address;
+        userDetailsForm.querySelector('#city').value = user.user.city;
+        const portfolioSection = document.querySelector('.Portfolio');
+        const portfolioListContainer = document.querySelector('.Portfolio .StockList');
+        portfolioListContainer.innerHTML = '';
+        const heading = document.createElement("h2");
+        heading.innerHTML = "Portfolio";
+        portfolioListContainer.appendChild(heading);
+
+        user.portfolio.forEach(stock => {
+            const listPortfolio = document.createElement('div');
+            listPortfolio.id = 'listPortfolio';
+
+            const stockSymbol = document.createElement('h3');
+            stockSymbol.textContent = `${stock.symbol}`;
+            listPortfolio.appendChild(stockSymbol);
+            
+            const stockOwned = document.createElement('h3');
+            stockOwned.textContent = `${stock.owned}`;
+            listPortfolio.appendChild(stockOwned);
+
+            const viewButton = document.createElement('button');
+            viewButton.className = 'stock-entry';
+            viewButton.textContent = 'View';
+            viewButton.dataset.symbol = stock.symbol;
+            listPortfolio.appendChild(viewButton);
+            portfolioListContainer.appendChild(listPortfolio);
+        });
+        detailsSection.style.display = 'block';
+
+    } else {
+        console.error('User data is missing or the portfolio is not an array');
+    }
 
 });
